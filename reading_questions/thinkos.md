@@ -5,19 +5,32 @@
 
 1) Give an example of a feature common in interpreted languages that is rare in compiled languages.
 
+Dynamic types are supported by interpreted languages, but not in compiled languages.
+
 2) Name two advantages of static typing over dynamic typing.
+
+allows you to catch errors before you run your code, safer than runtime erros
 
 3) Give an example of a static semantic error.
 
+errors that can be checked without actually understanding the program
+
 4) What are two reasons you might want to turn off code optimization?
+
+can change bugs and make them "appear or disappear", cut down on compile time
 
 5) When you run `gcc` with `-S`, why might the results look different on different computers?
 
-6) If you spell a variable name wrong, or if you spell a function name wrong, 
-the error messages you get might look very different.  Why?
+assembly code, looks different with different architechtures
+
+6) If you spell a variable name wrong, or if you spell a function name wrong, the error messages you get might look very different.  Why?
+
+so that you can understand what you did wrong.
+
 
 7) What is a segmentation fault?
 
+if you try to read or write an incorrect location in memory
 
 ## Chapter 2
 
