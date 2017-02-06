@@ -1,3 +1,3 @@
-  Written sprint reflection:
-  - f
-  Links to Head First C Exercise
+- Written sprint reflection:
+- Links to Head First C Exercise and Written answers to reading questions from Think OS
+- Exam question(s) and solutions
