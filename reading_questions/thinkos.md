@@ -39,15 +39,28 @@ if you try to read or write an incorrect location in memory
 
 1) Give a real-world example of virtualization (ideally not one of the ones in the book).
 
+The Netflix Delivery service makes it seem like I have access to every DVD out there, but those same DVDs are also brought to countless other people.
+
 2) What is the difference between a program and a process?
+
+A process is a software object that represents a running program and a program. All of the information that a program uses is stored in a data structure that is a process.
 
 3) What is the primary purpose of the process abstraction?  What illusion does the process abstraction create?
 
+The primary purpose of abstraction is so that users can interact with complex systems without knowing all of the details. This abstraction creates the illusion that there are a ton of CPUs and that the network that a machine is on is all of the networks.
+
 4) What is the kernel?
 
-5) What is a daemon?
- 
+The kernel is the part of the operating system that creates most of the core capabilities, like threading.
 
+5) What is a daemon?
+
+A daemon is a process that runs in the background and provides operating system services.
+
+## Chapter 3
+
+
+### Virtual memory
 ## Chapter 3
 
 
@@ -55,29 +68,55 @@ if you try to read or write an incorrect location in memory
 
 1) The Georgian alphabet has 33 letters.  How many bit are needed to specify a letter?
 
-2) In the UTF-16 character encoding, the binary representation of a character can take up to 32 bits.  
-Ignoring the details of the encoding scheme, how many different characters can be represented?
+log233
+
+2) In the UTF-16 character encoding, the binary representation of a character can take up to 32 bits. Ignoring the details of the encoding scheme, how many different characters can be represented?
+
+4294967296
 
 3) What is the difference between "memory" and "storage" as defined in Think OS?
 
+Memory is used to store short-term data, typically kept in the RAM, and is volatile, so it is lost when the computer shuts down. Storage is used for long-term storage, kept in the physical drive, and non-volatile.
+
 4) What is the difference between a GiB and a GB?  What is the percentage difference in their sizes?
+
+A GiB is a gibibyte and a GB is a gigabyte, 2^30 and 10^9 bytes respectively. They have a 7% difference in size.
 
 5) How does the virtual memory system help isolate processes from each other?
 
+"a process cannot access data belonging to another process, because there is no virtual address it can generate that maps to physical memory allocated to another proces"
+
 6) Why do you think the stack and the heap are usually located at opposite ends of the address space?
+
+This allows them to grow in directions away from each other as they expand.
 
 7) What Python data structure would you use to represent a sparse array?
 
+Dictionary
+
 8) What is a context switch?
 
-In this directory, you should find a subdirectory named `aspace` that contains `aspace.c`.  Run it on your computer and compare your results to mine.
-  
-1) Add a second call to `malloc` and check whether the heap on your system grows up (toward larger addresses).  
+A context switch is the mechanism that allows the operating system to to interrupt a running process, save its state, and run another process.
 
-2) Add a function that prints the address of a local variable, and check whether the stack grows down.  
+In this directory, you should find a subdirectory named `aspace` that contains `aspace.c`.  Run it on your computer and compare your results to mine.
+
+Address of main is 0x40057d
+Address of global is 0x60104c
+Address of local is 0x7fffa0899044
+Address of p is 0x2463010
+  
+1) Add a second call to `malloc` and check whether the heap on your system grows up (toward larger addresses).
+
+Yes
+
+2) Add a function that prints the address of a local variable, and check whether the stack grows down. 
+
+No
 
 3) Choose a random number between 1 and 32, and allocate two chunks with that size.  
 How much space is there between them?  Hint: Google knows how to subtract hexadecimal numbers.
+
+32 in decimal and 0x20 in hexadecimal
 
 
 ## Chapter 4
