@@ -124,22 +124,33 @@ How much space is there between them?  Hint: Google knows how to subtract hexade
 
 ### Files and file systems
 
-1) What abstractions do file systems provide?  Give an example of something that is logically 
-true about files systems but not true of their implementations.
+1) What abstractions do file systems provide?  Give an example of something that is logically true about files systems but not true of their implementations.
+
+File systems provide the abstraction that a file's name maps to its contents and that files are a sequence of bytes. Abstractly, file systems are byte-based, whereas the actual implementation of persistent storage is block-based.
 
 2) What information do you imagine is stored in an `OpenFileTableEntry`?
 
+?????????????????
+
 3) What are some of the ways operating systems deal with the relatively slow performance of persistent storage?
 
-4) Suppose your program writes a file and prints a message indicating that it is done writing.  
-Then a power cut crashes your computer.  After you restore power and reboot the computer, you find that the 
-file you wrote is not there.  What happened?
+Running other processes while waiting for a new block to be stored in memory, reading multiple blocks at once, prediciting future block reads and begin loading before requested, storing written files in memory and later writting to a disk which allows for file modification before block loading, and the os also keeps a copy of recently used blocks in memory allowing for faster use.
+
+4) Suppose your program writes a file and prints a message indicating that it is done writing. Then a power cut crashes your computer.  After you restore power and reboot the computer, you find that the file you wrote is not there.  What happened?
+
+The file was still in the stages of buffering. When a program write a file, the OS stores that in memory and writes it onto a block later. This is done for the sake of efficiency, but it is not great in this situation.
 
 5) Can you think of one advantage of a File Allocation Table over a UNIX inode?  Or an advantage of a inode over a FAT?
 
+A FAT can find empty files to be written faster than a UNIX inode, but because the files are not held continuously they are slower. I used [this resource](http://web.cs.ucla.edu/classes/fall10/cs111/scribe/11a/)
+
 6) What is overhead?  What is fragmentation?
 
+Overhead is the amount of space that the data structure allocator uses. Framentation is chunks of unused space.
+
 7) Why is the "everything is a file" principle a good idea?  Why might it be a bad idea?
+
+It allows for abstraction in other systems which can make them easier to understand and work with because you don't have to understand the small details. It could be bad because it might not be true for everything and might cause certain errors.
 
 If you would like to learn more about file systems, a good next step is to learn about journaling file systems.  
 Start with [this Wikipedia article](https://en.wikipedia.org/wiki/Journaling_file_system), then 
