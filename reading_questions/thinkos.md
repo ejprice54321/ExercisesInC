@@ -146,7 +146,7 @@ A FAT can find empty files to be written faster than a UNIX inode, but because t
 
 6) What is overhead?  What is fragmentation?
 
-Overhead is the amount of space that the data structure allocator uses. Framentation is chunks of unused space.
+Overhead is the amount of space that the data allocator uses. Framentation is chunks of unused space.
 
 7) Why is the "everything is a file" principle a good idea?  Why might it be a bad idea?
 
