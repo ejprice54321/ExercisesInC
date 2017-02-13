@@ -130,7 +130,7 @@ File systems provide the abstraction that a file's name maps to its contents and
 
 2) What information do you imagine is stored in an `OpenFileTableEntry`?
 
-The state of the file, or metadata about the file. Could be 
+The state of the file, or metadata about the file. Could be a pointer to the current file location or the main data stored on the file.
 
 3) What are some of the ways operating systems deal with the relatively slow performance of persistent storage?
 
