@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
   char line[80]; // characters that will be scanned from stdin
   char ch; // the character that will be set to the tag if there is on
   char opt = 'w'; // the option that we have, default is write'
-  int count = 0;
+  int count;
 
   while((ch = getopt(argc, argv, "a:")) != EOF) {
   // check for a tag in the command line
