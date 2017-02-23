@@ -12,14 +12,18 @@
 
 - This sprint, I have completed the readings and exercises for chapters 2.5, 3, and 4. I plan on completing chapter 5 tonight.
 
-[Head First C exercises 2.5, 3, 4](/homework)
+- [Head First C exercises 2.5, 3, 4](/homework)
 
 ## Think OS & Little Book of Semaphores
 
 - This sprint I read Think OS 4 and Little Book of Semaphores 1 & 2. I have completed the reading for Think OS 5, but I'm having some trouble with the reading questions. I plan to meet with another student to get some help with them this week.
 
-[ThinkOS chapter 4 questions answered and chapter 5 partially completed](/reading_questions/thinkos.md)
+- [ThinkOS chapter 4 questions answered and chapter 5 partially completed](/reading_questions/thinkos.md)
 
-[Little Book of Semaphores chapters 1 & 2 puzzle answers](/homework)
+- [Little Book of Semaphores chapters 1 & 2 puzzle answers](/homework)
 
 ## Exam Question & Answers
+
+- What does RAM stand for and why is it called that?
+
+- RAM stands for Random Access Memory. It is called such because any memory address can be accessed directly, compared to an HDD, which has to start from the beginning to retreive a piece of data.
