@@ -78,7 +78,50 @@ float my_random_float2()
 // compute a random double using my algorithm
 double my_random_double()
 {
-  // TODO: fill this in
+  long int x;
+  long int mant;
+  long int exp = 1022;
+  long int mask = 1;
+
+  union {
+    double d;
+    long int i;
+  } b;
+
+  // generate random bits until we see the first set bit
+  while (1) {
+    x = random();
+    x <<= 32;
+    long int p = random();
+    x = x | p;
+    
+    if (x == 0) {
+      exp -= 63;
+    } else {
+      break;
+    }
+  }
+
+  // find the location of the first set bit and compute the exponent
+  while (x & mask) {
+    mask <<= 1;
+    exp--;
+  }
+
+  // use the remaining bit as the mantissa
+  mant = x >> 11;
+  b.i = (exp << 52) | mant;
+
+  return b.d;
+
+  // int x;
+  // double d;
+  //
+  // x = random();
+  // d = (double) x / (double) RAND_MAX;
+  //
+  // return d;
+
 }
 
 // return a constant (this is a dummy function for time trials)
@@ -124,5 +167,3 @@ float random_double()
 
   return f;
 }
-
-

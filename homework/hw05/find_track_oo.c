@@ -58,13 +58,15 @@ int regex_match(Regex *regex, char *s) {
 
   char msgbuf[100];
 
-  int ret = regexec(*regex, s, 0, NULL, 0);
+  regex_t regex_add;
+
+  regex->inner_struct[1] = regex_add;
+
+  int ret = regexec(&regex_add, s, 0, NULL, 0);
   if (!ret){
     return 1;
-  }else if (ret == REG_NOMATCH) {
-    continue;
-  } else {
-    regerror(ret, &regex, msgbuf, sizeof(msgbuf));
+  }else {
+    regerror(ret, &regex_add, msgbuf, sizeof(msgbuf));
     fprintf(stderr, "Regex match failed: %s\n", msgbuf);
     exit(1);
   }
@@ -75,7 +77,10 @@ int regex_match(Regex *regex, char *s) {
  * regex: Regex
  */
 void regex_free(Regex *regex) {
-  regfree(&regex);
+  regex_t regex_add;
+
+  regex->inner_struct[1] = regex_add;
+  regfree(&regex_add);
 }
 
 
