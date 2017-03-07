@@ -74,10 +74,7 @@ main(int argc, char *argv[])
 
   time = time_func(iters, my_random_float2);
   printf("%f ms \t my_random_float2\n", time);
-
-  time = time_func(itersd, my_random_double);
-  printf("%f ms \t my_random_double\n", time);
-
+  
   time = time_func(iters, random_float);
   printf("%f ms \t random_float\n", time);
 }

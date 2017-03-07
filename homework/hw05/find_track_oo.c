@@ -21,7 +21,8 @@ char tracks[][80] = {
 
 
 typedef struct {
-    regex_t inner_struct[1];
+    regex_t regex_struct;
+    int status_flag;
 } Regex;
 
 
@@ -31,21 +32,26 @@ typedef struct {
  * flags: flags passed to regcomp
  * returns: new Regex
  */
-Regex *make_regex(char *pattern, int flags) {
-  Regex *regex;
+Regex* make_regex(char* pattern, int flags) {
+
+  Regex* regex =  malloc(sizeof(Regex));
 
   regex_t regex_add;
+  int status = 1;
 
-  regex->inner_struct[1] = regex_add;
+  regex->regex_struct = regex_add;
+  regex->status_flag = status;
 
-  int ret = regcomp(&regex_add, pattern, flags);
+  int ret = regcomp(&(regex->regex_struct), pattern, flags);
+
+  printf("%s\n", pattern);
 
   if (ret) {
       fprintf(stderr, "Could not compile regex\n");
       exit(1);
-  } else{
-      return regex;
   }
+  printf("made regex\n");
+  return regex;
 }
 
 /* Checks whether a regex matches a string.
@@ -54,21 +60,25 @@ Regex *make_regex(char *pattern, int flags) {
  * s: string
  * returns: 1 if there's a match, 0 otherwise
  */
-int regex_match(Regex *regex, char *s) {
+int regex_match(Regex* regex, char *s) {
 
   char msgbuf[100];
+  //
+  // regex_t regex_add;
+  //
+  // regex->regex_struct = regex_add;
 
-  regex_t regex_add;
+  int ret = regexec(&(regex->regex_struct), s, 0, NULL, 0);
 
-  regex->inner_struct[1] = regex_add;
+  printf("%i\n", ret);
 
-  int ret = regexec(&regex_add, s, 0, NULL, 0);
   if (!ret){
+    printf("Found match!");
     return 1;
   }else {
-    regerror(ret, &regex_add, msgbuf, sizeof(msgbuf));
+    regerror(ret, &(regex->regex_struct), msgbuf, sizeof(msgbuf));
     fprintf(stderr, "Regex match failed: %s\n", msgbuf);
-    exit(1);
+    return 0;
   }
 }
 
@@ -76,11 +86,8 @@ int regex_match(Regex *regex, char *s) {
  *
  * regex: Regex
  */
-void regex_free(Regex *regex) {
-  regex_t regex_add;
-
-  regex->inner_struct[1] = regex_add;
-  regfree(&regex_add);
+void regex_free(Regex* regex) {
+  regfree(&(regex->regex_struct));
 }
 
 
@@ -92,7 +99,9 @@ void find_track_regex(char pattern[])
 {
     int i;
 
-    Regex *regex = make_regex(pattern, REG_EXTENDED | REG_NOSUB);
+    Regex* regex = make_regex(pattern, REG_EXTENDED | REG_NOSUB);
+
+    // printf("%i\n", regex->status_flag);
 
     for (i=0; i<NUM_TRACKS; i++) {
     	if (regex_match(regex, tracks[i])) {
@@ -104,9 +113,9 @@ void find_track_regex(char pattern[])
 }
 
 
-int main (int argc, char *argv[])
+int main (int argc, char* argv[])
 {
-    char *pattern = "F.*F.*";
+    char* pattern = "F.*F.*";
     find_track_regex(pattern);
 
     return 0;

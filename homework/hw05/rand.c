@@ -94,7 +94,7 @@ double my_random_double()
     x <<= 32;
     long int p = random();
     x = x | p;
-    
+
     if (x == 0) {
       exp -= 63;
     } else {
