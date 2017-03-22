@@ -1,0 +1,12 @@
+ex03.md
+mytee
+tee
+tee.c
+test.txt
+ex03.md
+mytee
+tee
+tee.c
+test1.txt
+test2.txt
+test.txt

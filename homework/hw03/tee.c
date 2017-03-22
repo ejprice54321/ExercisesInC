@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <getopt.h>
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
   char line[80]; // characters that will be scanned from stdin
   char ch; // the character that will be set to the tag if there is on
@@ -16,15 +16,17 @@ int main(int argc, char *argv[])
       // an error
       case 'a':
         opt = ch;
+        optind --;
         break;
       default:
         fprintf(stderr, "Unkown option: %s\n", optarg);
         return 1;
     }
-    //skip past the option that we just read
-    argc -= optind;
-    argv += optind;
+
   }
+  //skip past the option that we just read
+  argc -= optind;
+  argv += optind;
 
   // create pointers for all of the arguments we pass in
   FILE *files[argc];
@@ -37,6 +39,8 @@ int main(int argc, char *argv[])
       were passed in
     */
     printf("%s\n", line);
+    // file = fopen(argv, "w")
+    // fprintf(file, "%\n")
 
     for (count = 0; count < argc; count++){
       if (opt == 'a'){
@@ -45,11 +49,12 @@ int main(int argc, char *argv[])
         files[count] = fopen(argv[count], "w");
       }
       fprintf(files[count], "%s\n", line);
+      fclose(files[count]);
     }
   }
-  for (count = 0; count < argc; count++){
-    // close all of the files
-    fclose(files[count]);
-  }
+  // for (count = 0; count < argc; count++){
+  //   // close all of the files
+  //   fclose(files[count]);
+  // }
   return 0;
 }
