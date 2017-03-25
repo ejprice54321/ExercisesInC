@@ -5,7 +5,7 @@
 int main(int argc, char **argv)
 {
   char line[80]; // characters that will be scanned from stdin
-  char ch; // the character that will be set to the tag if there is on
+  char ch; // the character that will be set to the tag if there is one
   char opt = 'w'; // the option that we have, default is write'
   int count;
 
@@ -16,7 +16,7 @@ int main(int argc, char **argv)
       // an error
       case 'a':
         opt = ch;
-        optind --;
+        optind--;
         break;
       default:
         fprintf(stderr, "Unkown option: %s\n", optarg);
@@ -39,8 +39,6 @@ int main(int argc, char **argv)
       were passed in
     */
     printf("%s\n", line);
-    // file = fopen(argv, "w")
-    // fprintf(file, "%\n")
 
     for (count = 0; count < argc; count++){
       if (opt == 'a'){
