@@ -58,8 +58,6 @@ int pop(Node **list) {
     Node* temp;
     int returnVal;
 
-    // print_list(list);
-
     if (current == NULL){
       return -1;
     } else if (current->next == NULL){
@@ -71,7 +69,6 @@ int pop(Node **list) {
       returnVal = current->val;
       current->val = current->next->val;
       temp = current->next;
-      // print_list(list);
       current->next = current->next->next;
       free(temp);
       return returnVal;
