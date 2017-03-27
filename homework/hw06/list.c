@@ -58,12 +58,20 @@ int pop(Node **list) {
     Node* temp;
     int returnVal;
 
+    // print_list(list);
+
     if (current == NULL){
       return -1;
-    } else{
+    } else if (current->next == NULL){
+      returnVal = current->val;
+      *list = NULL;
+      free(current);
+      return returnVal;
+    }else{
       returnVal = current->val;
       current->val = current->next->val;
       temp = current->next;
+      // print_list(list);
       current->next = current->next->next;
       free(temp);
       return returnVal;
@@ -98,6 +106,11 @@ int remove_by_value(Node **list, int val) {
     Node *current;
     while (prev->next != NULL && prev->next->val != val){
       prev = prev->next;
+    }
+    if (prev->val == val){
+      *list = NULL;
+      free(prev);
+      return 1;
     }
     if (prev->next == NULL){
       return;
@@ -146,9 +159,9 @@ int main() {
     push(list, retval+10);
     print_list(list);
 
-    remove_by_value(list, 3);
+    remove_by_value(list, 9);
     print_list(list);
-
+    
     remove_by_value(list, 7);
     print_list(list);
 

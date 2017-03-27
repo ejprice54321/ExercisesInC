@@ -23,13 +23,13 @@ typedef struct {
 } Value;
 
 
-/* Makes a Value object that contains an int. 
- * 
+/* Makes a Value object that contains an int.
+ *
  * i: value to store.
  *
- * returns: pointer to a new Value 
+ * returns: pointer to a new Value
  */
-Value *make_int_value(int i) 
+Value *make_int_value(int i)
 {
     Value *value = (Value *) malloc (sizeof (Value));
     value->type = INT;
@@ -38,13 +38,13 @@ Value *make_int_value(int i)
 }
 
 
-/* Makes a Value object that contains a string. 
- * 
+/* Makes a Value object that contains a string.
+ *
  * s: value to store.
  *
- * returns: pointer to a new Value 
+ * returns: pointer to a new Value
  */
-Value *make_string_value(char *s) 
+Value *make_string_value(char *s)
 {
     Value *value = (Value *) malloc (sizeof (Value));
     value->type = STRING;
@@ -53,12 +53,12 @@ Value *make_string_value(char *s)
 }
 
 
-/* Prints a value object. 
+/* Prints a value object.
  *
  * value: pointer to Value
  *
  */
-void print_value (Value *value) 
+void print_value (Value *value)
 {
     if (value == NULL) {
 	printf ("%p", value);
@@ -78,7 +78,7 @@ void print_value (Value *value)
 
 /* Here's another way to make a polymorphic object.
 
-The key can be any pointer type.  It's stored as a (void *), so
+The key can be any pointer typef.  It's stored as a (void *), so
 when you extract it, you have to cast it back to whatever it is.
 
 `hash` is a pointer to a function that knows how to hash the key.
@@ -93,7 +93,7 @@ typedef struct {
 } Hashable;
 
 
-/* Makes a Hashable object. 
+/* Makes a Hashable object.
  *
  * key: pointer to anything
  * hash: function that can hash keys
@@ -102,7 +102,7 @@ typedef struct {
  * returns: pointer to Hashable
  *
 */
-Hashable *make_hashable(void *key, 
+Hashable *make_hashable(void *key,
 			int (*hash) (void *),
 			int (*equal) (void *, void *)
 			)
@@ -115,7 +115,7 @@ Hashable *make_hashable(void *key,
 }
 
 
-/* Prints a Hashable object. 
+/* Prints a Hashable object.
  *
  * hashable: pointer to hashable
  */
@@ -126,8 +126,8 @@ void print_hashable(Hashable *hashable)
 }
 
 
-/* Hashes an integer. 
- * 
+/* Hashes an integer.
+ *
  * p: pointer to integer
  *
  * returns: integer hash value
@@ -138,8 +138,8 @@ int hash_int(void *p)
 }
 
 
-/* Hashes a string. 
- * 
+/* Hashes a string.
+ *
  * p: pointer to first char of a string
  *
  * returns: integer hash value
@@ -151,14 +151,14 @@ int hash_string(void *p)
     int i = 0;
 
     while (s[i] != 0) {
-	total += s[i];
-	i++;
+      total += s[i];
+      i++;
     }
     return total;
 }
 
 
-/* Hashes any Hashable. 
+/* Hashes any Hashable.
  *
  * hashable: Hashable object
  *
@@ -170,7 +170,7 @@ int hash_hashable(Hashable *hashable)
 }
 
 
-/* Compares integers. 
+/* Compares integers.
  *
  * ip: pointer to int
  * jp: pointer to int
@@ -179,12 +179,13 @@ int hash_hashable(Hashable *hashable)
  */
 int equal_int (void *ip, void *jp)
 {
-    // FILL THIS IN!
-    return 0;
+    int i = *(int*)ip;
+    int j = *(int*)jp;
+    return (j==i);
 }
 
 
-/* Compares strings. 
+/* Compares strings.
  *
  * s1: pointer to first char of a string
  * s2: pointer to first char of a string
@@ -193,12 +194,16 @@ int equal_int (void *ip, void *jp)
  */
 int equal_string (void *s1, void *s2)
 {
-    // FILL THIS IN!
-    return 0;
+  char** string1 = (char**)s1;
+  char** string2 = (char**)s2;
+  if (strcmp(*string1, *string2) == 0){
+    return 1;
+  }
+  return 0;
 }
 
 
-/* Compares Hashables. 
+/* Compares Hashables.
  *
  * h1: Hashable
  * h2: Hashable of the same type
@@ -208,15 +213,14 @@ int equal_string (void *s1, void *s2)
  */
 int equal_hashable(Hashable *h1, Hashable *h2)
 {
-    // FILL THIS IN!
-    return 0;
+    return hash_hashable(h1) == hash_hashable(h2);
 }
 
 
-/* Makes a Hashable int. 
+/* Makes a Hashable int.
  *
  * Allocates space and copies the int.
- * 
+ *
  * x: integer to store
  *
  * returns: Hashable
@@ -229,10 +233,10 @@ Hashable *make_hashable_int (int x)
 }
 
 
-/* Makes a Hashable int. 
+/* Makes a Hashable int.
  *
  * Stores a reference to the string (not a copy).
- * 
+ *
  * s: string to store
  *
  * returns: Hashable
@@ -297,8 +301,22 @@ Node *prepend(Hashable *key, Value *value, Node *rest)
 /* Looks up a key and returns the corresponding value, or NULL */
 Value *list_lookup(Node *list, Hashable *key)
 {
-    // FILL THIS IN!
-    return NULL;
+    Node* current = list;
+
+    printf("%p\n", key);
+
+    while (current != NULL) {
+        printf("%p\n", current->key);
+        current = current->next;
+    }
+    printf("%p\n", current->key);
+    // if (current == NULL){
+    //   printf("%p\n", current);
+    //   return NULL;
+    // }
+
+    Value *val = current->value;
+    return val;
 }
 
 
@@ -319,7 +337,7 @@ Map *make_map(int n)
     map->n = n;
     map->lists = (Node **) malloc (sizeof (Node *) * n);
     for (i=0; i<n; i++) {
-	map->lists[i] = NULL;
+      map->lists[i] = NULL;
     }
     return map;
 }
@@ -372,21 +390,22 @@ int main ()
     // make a list by hand
     Value *value1 = make_int_value (17);
     Node *node1 = make_node(hashable1, value1, NULL);
-    print_node (node1);
+    // print_node (node1);
+    // printf("%d\n", node1->value->i);
 
     Value *value2 = make_string_value ("Orange");
     Node *list = prepend(hashable2, value2, node1);
-    print_list (list);
+    // print_list (list);
 
     // run some test lookups
     Value *value = list_lookup (list, hashable1);
-    print_lookup(value);
+    // print_lookup(value);
 
     value = list_lookup (list, hashable2);
-    print_lookup(value);
+    // print_lookup(value);
 
     value = list_lookup (list, hashable3);
-    print_lookup(value);
+    // print_lookup(value);
 
     // make a map
     Map *map = make_map(10);
@@ -398,13 +417,13 @@ int main ()
 
     // run some test lookups
     value = map_lookup(map, hashable1);
-    print_lookup(value);
+    // print_lookup(value);
 
     value = map_lookup(map, hashable2);
-    print_lookup(value);
+    // print_lookup(value);
 
     value = map_lookup(map, hashable3);
-    print_lookup(value);
+    // print_lookup(value);
 
     return 0;
 }

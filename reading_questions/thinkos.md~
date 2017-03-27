@@ -239,26 +239,38 @@ If you want to know more about how malloc works, read
 
 1) What happens if a program writes a new value into the program counter?
 
+- The program counter holds the address of the next instruction in the program. If a program writes a new value to it, then the next instruction that the program will complete gets changed.
+
 2) What is the fundamental problem caches are meant to solve?
+
+- The large amount of time it takes to transfer data for a new instruction from memory.
 
 3) If cache access time is 1 ns and memory access time is 10 ns, what is the average
 access time of a program with hit rate 50%?  How about 90%?
 
+- 5.5ns
+- 1.9ns
+
 4) The book gives several examples of programming language features, like loops, that tend 
-to improve locality in the access pattern of instructions and/or data.  Can you think of other examples?  
+to improve locality in the access pattern of instructions and/or data.  Can you think of other examples?
+
+- 
+
 Or counter-examples that might decrease locality?
+
+- Linked lists
 
 5)  If you refactor a program to improve locality, would you say the program is "cache aware"?  Why not?
 
-6) See if you can estimate the cost of a memory cache by comparing the prices of two similar CPUs with 
-different cache sizes.
+????????????
+
+6) See if you can estimate the cost of a memory cache by comparing the prices of two similar CPUs with different cache sizes.
 
 7) Why are cache policies generally more complex at the bottom of the memory hierarchy?
 
 8) Can you think of a strategy operating systems could use to avoid thrashing or recover when it occurs?
 
-Run the cache code on your laptop or another computer and see if you can infer the cache size and block size.  
-If you can find the technical specifications for your computer, see if your inferences are right.
+Run the cache code on your laptop or another computer and see if you can infer the cache size and block size. If you can find the technical specifications for your computer, see if your inferences are right.
 
 1) In this directory you should find a subdirectory named `cache` that contains `cache.c` and supporting files.  Read `cache.c`, then run `make` and `./cache`.
 
