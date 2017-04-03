@@ -3,6 +3,8 @@
 Copyright 2016 Allen Downey
 License: Creative Commons Attribution-ShareAlike 3.0
 
+Equals funcitons, list lookup, map add, and map lookup written by Emma Price
+
 */
 
 #include <stdio.h>
@@ -194,12 +196,12 @@ int equal_int (void *ip, void *jp)
  */
 int equal_string (void *s1, void *s2)
 {
-  char* string1 = (char*)s1;
-  char* string2 = (char*)s2;
-  if (strcmp(string1, string2) == 0){
-    return 1;
-  }
-  return 0;
+    char* string1 = (char*)s1;
+    char* string2 = (char*)s2;
+    if (strcmp(string1, string2) == 0){
+      return 1;
+    }
+    return 0;
 }
 
 
@@ -237,7 +239,7 @@ Hashable *make_hashable_int (int x)
 }
 
 
-/* Makes a Hashable int.
+/* Makes a Hashable string.
  *
  * Stores a reference to the string (not a copy).
  *
@@ -337,7 +339,7 @@ Map *make_map(int n)
     map->n = n;
     map->lists = (Node **) malloc (sizeof (Node *) * n);
     for (i=0; i<n; i++) {
-      map->lists[i] = NULL;
+        map->lists[i] = NULL;
     }
     return map;
 }
@@ -349,10 +351,10 @@ void print_map(Map *map)
     int i;
 
     for (i=0; i<map->n; i++) {
-	if (map->lists[i] != NULL) {
-	    printf ("%d\n", i);
-	    print_list (map->lists[i]);
-	}
+      	if (map->lists[i] != NULL) {
+      	    printf ("%d\n", i);
+      	    print_list (map->lists[i]);
+      	}
     }
 }
 

@@ -1,8 +1,6 @@
 /* Example code for Exercises in C.
-
 Copyright 2016 Allen B. Downey
 License: MIT License https://opensource.org/licenses/MIT
-
  */
 
 #include <stdio.h>
@@ -19,8 +17,6 @@ License: MIT License https://opensource.org/licenses/MIT
 // error information
 extern int errno;
 
-int shared_int = 17;
-int *int_pointer = NULL;
 
 // get_seconds returns the number of seconds since the
 // beginning of the day, with microsecond precision
@@ -36,11 +32,6 @@ void child_code(int i)
 {
     sleep(i);
     printf("Hello from child %d.\n", i);
-    shared_int += 23 + i;
-    printf("child shared_int is %d\n", shared_int);
-    *int_pointer += 1;
-    printf("child int_pointer %d\n", *int_pointer);
-    printf("child int_pointer is located at %p\n", int_pointer);
     exit(i);
 }
 
@@ -53,9 +44,6 @@ int main(int argc, char *argv[])
     pid_t pid;
     double start, stop;
     int i, num_children;
-
-    int_pointer = malloc(sizeof(int));
-    *int_pointer = 42;
 
     // the first command-line argument is the name of the executable.
     // if there is a second, it is the number of children to create.
@@ -72,44 +60,40 @@ int main(int argc, char *argv[])
 
         // create a child process
         printf("Creating child %d.\n", i);
-	pid = fork();
+      	pid = fork();
 
-	/* check for an error */
-	if (pid == -1) {
-	    fprintf(stderr, "fork failed: %s\n", strerror(errno));
-	    perror(argv[0]);
-	    exit(1);
-	}
+      	/* check for an error */
+      	if (pid == -1) {
+      	    fprintf(stderr, "fork failed: %s\n", strerror(errno));
+      	    perror(argv[0]);
+      	    exit(1);
+      	}
 
-	/* see if we're the parent or the child */
-	if (pid == 0) {
-	  child_code(i);
-	}
+      	/* see if we're the parent or the child */
+      	if (pid == 0) {
+      	  child_code(i);
+      	}
     }
 
-    /* parent continues */
+      /* parent continues */
     printf("Hello from the parent.\n");
 
     for (i=0; i<num_children; i++) {
         pid = wait(&status);
 
-	if (pid == -1) {
-	    fprintf(stderr, "wait failed: %s\n", strerror(errno));
-	    perror(argv[0]);
-	    exit(1);
-	}
+      	if (pid == -1) {
+      	    fprintf(stderr, "wait failed: %s\n", strerror(errno));
+      	    perror(argv[0]);
+      	    exit(1);
+      	}
 
-	// check the exit status of the child
-	status = WEXITSTATUS(status);
-	printf("Child %d exited with error code %d.\n", pid, status);
+      	// check the exit status of the child
+      	status = WEXITSTATUS(status);
+      	printf("Child %d exited with error code %d.\n", pid, status);
     }
     // compute the elapsed time
     stop = get_seconds();
     printf("Elapsed time = %f seconds.\n", stop - start);
-
-    printf("parent shared_int is %d\n", shared_int);
-    printf("parent int_pointer %d\n", *int_pointer);
-    printf("parent point is %p\n", int_pointer);
 
     exit(0);
 }
