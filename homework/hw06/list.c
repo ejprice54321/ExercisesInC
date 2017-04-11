@@ -112,7 +112,7 @@ int remove_by_value(Node **list, int val) {
     if (prev->next == NULL){
       return;
     }
-    current = prev->next;
+    /.current = prev->next;
     prev->next = prev->next->next;
     free(current);
     return 1;
@@ -158,7 +158,7 @@ int main() {
 
     remove_by_value(list, 9);
     print_list(list);
-    
+
     remove_by_value(list, 7);
     print_list(list);
 
