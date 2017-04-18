@@ -101,18 +101,18 @@ void push(Node **list, int val) {
 int remove_by_value(Node **list, int val) {
     Node *prev = *list;
     Node *current;
+
+    if (prev == NULL){
+      return 0;
+    }
+    if (prev->val == val){
+      pop(list);;
+      return 1;
+    }
     while (prev->next != NULL && prev->next->val != val){
       prev = prev->next;
     }
-    if (prev->val == val){
-      *list = NULL;
-      free(prev);
-      return 1;
-    }
-    if (prev->next == NULL){
-      return;
-    }
-    /.current = prev->next;
+    current = prev->next;
     prev->next = prev->next->next;
     free(current);
     return 1;

@@ -336,8 +336,9 @@ As you read Chapter 9, you should compile and run the example code.  By the natu
 
 1) What does it mean to say that a data structure is thread safe?
 
-2) In the circular buffer implementation of a queue, why is the maximum number of elements in the queue `n-1`,
-if `n` is the size of the array?
+- All threads can use the data structure at the same time.
+
+2) In the circular buffer implementation of a queue, why is the maximum number of elements in the queue `n-1`, if `n` is the size of the array?
 
 3) If there is no mutex to protect the queue, give an example of a sequence of steps that could leave
 the queue in an inconsistent state.
