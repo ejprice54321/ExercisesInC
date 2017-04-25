@@ -3,7 +3,7 @@
 Copyright 2014 Allen Downey
 License: MIT License
 
-Based on an example from 
+Based on an example from
 https://raw.githubusercontent.com/twcamper/head-first-c/master/10/math-master.c
 
 Based on an example in Head First C.
@@ -34,9 +34,12 @@ void end_game(int sig)
     exit(EXIT_SUCCESS);
 }
 
+int flag = 0;
+
 void times_up(int sig) {
-    puts("\nTIME'S UP!");
-    raise(SIGINT);
+    // puts("\nTIME'S UP!");
+    // raise(SIGINT);
+    flag = 1;
 }
 
 int main(void) {
@@ -47,19 +50,23 @@ int main(void) {
     srandom((unsigned int) time(NULL));
 
     while(1) {
-	a = rand() % 11;
-	b = rand() % 11;
-	printf("\nWhat is %d times %d? ", a, b);
+      	a = rand() % 11;
+      	b = rand() % 11;
+      	printf("\nWhat is %d times %d? ", a, b);
 
-	alarm(5);
-	fgets(txt, 4, stdin);
+      	alarm(5);
+        while(1){
+          char* ret = fgets(txt, 4, stdin);
+          if (ret) break;
+        }
 
-	answer = atoi(txt);
-	if (answer == a * b) {
-	    score++;
-	} else {
-	    printf("\nWrong! Score: %i\n", score);
-	}
+      	answer = atoi(txt);
+      	if (answer == a * b) {
+      	    score++;
+      	} else {
+      	    printf("\nWrong! Score: %i\n", score);
+        }
+        if (flag == 1) break;
     }
     return 0;
 }

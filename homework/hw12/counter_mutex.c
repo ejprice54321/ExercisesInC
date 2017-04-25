@@ -158,18 +158,21 @@ void join_thread (pthread_t thread)
  */
 void child_code (Shared *shared)
 {
-
+    sem_t* test = shared->semaphore;
+    int test3 = sem_wait(test);
+    if (test3 == -1){
+      exit(1);
+    }
+    printf("HERE\n");
     while (1) {
 	    if (shared->counter >= shared->end) {
 	        return;
 	    }
-      sem_t* test = shared->semaphore;
-      int test3 = sem_wait(test);
-      if (test3 == -1){
-        exit(1);
-      }
       shared->array[shared->counter]++;
       shared->counter++;
+      // if (shared->counter % 1000 == 0){
+      //   printf("%d\n", shared->counter);
+      // }
       int test2 = sem_signal(test);
       if (test2 == -1){
         exit(1);
@@ -222,7 +225,7 @@ int main ()
     int i;
     pthread_t child[NUM_CHILDREN];
 
-    Shared *shared = make_shared (100000000);
+    Shared *shared = make_shared (10000000);
 
     for (i=0; i<NUM_CHILDREN; i++) {
 	      child[i] = make_thread (entry, shared);
