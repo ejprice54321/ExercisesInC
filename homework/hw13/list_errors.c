@@ -22,29 +22,41 @@ Node *make_node(int val, Node *next) {
     return node;
 }
 
+void free_anything(Node **head) {
+  Node *current = *head;
+  Node *p;
+  Node *next;
+
+  for(p=current; NULL != p; p = next) {
+      next = p->next;
+      free(p);
+  }
+  // head = NULL;
+}
+
 void print_list(Node *head) {
     Node *current = head;
+    printf("%s", "[");
 
     while (current != NULL) {
-        printf("%d\n", current->val);
+        printf("%d, ", current->val);
         current = current->next;
     }
+    printf("%s\n", "]");
 }
 
 int pop(Node **head) {
     int retval;
-    Node *next_node;
+    Node *next_node = *head;
 
-    if (*head == NULL) {
+    if ((*head) == NULL) {
         return -1;
+    } else{
+          *head = next_node->next;
+          retval = next_node->val;
+          free(next_node);
+          return retval;
     }
-
-    next_node = (*head)->next;
-    retval = (*head)->val;
-    *head = next_node;
-    free(head);
-
-    return retval;
 }
 
 // Add a new element to the beginning of the list.
@@ -135,13 +147,6 @@ Node *make_something() {
     return node3;
 }
 
-int freeList(Node** list){
-    Node *node = *list;
-    while(node != NULL){
-        int val = pop();
-    }
-}
-
 int main() {
     // make a list of even numbers
     Node *test_list = make_node(2, NULL);
@@ -158,19 +163,22 @@ int main() {
     int res = insert_by_index(&test_list, 9, 8);
     assert(res == -1);
 
-    printf("test_list\n");
+    printf("test_list ");
     print_list(test_list);
-
+    
     // make an empty list
-    printf("empty\n");
+    printf("empty ");
     Node *empty = NULL;
+
+    Node *something = make_something();
+    free_anything(&something);
+    // free(something);
 
     // add an element to the empty list
     insert_by_index(&empty, 1, 0);
     print_list(empty);
-
-    // Node *something = make_something();
     // free(something);
-
+    free_anything(&test_list);
+    free_anything(&empty);
     return 0;
 }

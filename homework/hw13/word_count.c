@@ -41,10 +41,10 @@ void pair_printor (gpointer value, gpointer user_data)
 
 
 /* Iterator that prints keys and values. */
-void printor (gpointer key, gpointer value, gpointer user_data)
-{
-    printf (user_data, key, * (gint *) value);
-}
+// void printor (gpointer key, gpointer value, gpointer user_data)
+// {
+//     printf (user_data, key, * (gint *) value);
+// }
 
 
 /* Iterator that add key-value pairs to a sequence. */
@@ -119,7 +119,7 @@ int main (int argc, char** argv)
     g_hash_table_foreach (hash,  (GHFunc) accumulator, (gpointer) seq);
 
     // iterate the sequence and print the pairs
-    g_sequence_foreach (seq,  (GFunc) pair_printor, NULL);
+    // g_sequence_foreach (seq,  (GFunc) pair_printor, NULL);
 
     g_hash_table_destroy (hash);
     g_sequence_free (seq);
